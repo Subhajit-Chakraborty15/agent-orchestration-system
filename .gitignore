@@ -1,0 +1,25 @@
+# Environments
+venv/
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Databases / local data
+*.sqlite3
+pgdata/
+chromadata/
+ollamadata/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
