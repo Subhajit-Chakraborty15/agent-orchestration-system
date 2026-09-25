@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: aos_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: aos
+      POSTGRES_PASSWORD: aos_password
+      POSTGRES_DB: agent_orchestration
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: aos_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  chromadb:
+    image: chromadb/chroma:0.5.15
+    container_name: aos_chromadb
+    restart: unless-stopped
+    ports:
+      - "8001:8000"
+    volumes:
+      - chromadata:/chroma/chroma
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: aos_ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollamadata:/root/.ollama
+    # after `docker compose up -d`, run once:
+    # docker exec -it aos_ollama ollama pull llama3.2
+
+volumes:
+  pgdata:
+  chromadata:
+  ollamadata:
